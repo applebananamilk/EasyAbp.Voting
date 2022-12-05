@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\common.props" />
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace />
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="EasyAbp\Voting\Rule\Localization\en.json" />
+	  <None Remove="EasyAbp\Voting\Rule\Localization\zh-Hans.json" />
+	  <None Remove="EasyAbp\Voting\Rule\Localization\zh-Hant.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="EasyAbp\Voting\Rule\Localization\Resources\en.json" />
+	  <EmbeddedResource Include="EasyAbp\Voting\Rule\Localization\Resources\zh-Hans.json" />
+	  <EmbeddedResource Include="EasyAbp\Voting\Rule\Localization\Resources\zh-Hant.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\EasyAbp.Voting.Domain\EasyAbp.Voting.Domain.csproj" />
+	</ItemGroup>
+
+</Project>

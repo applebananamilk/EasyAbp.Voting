@@ -1,0 +1,15 @@
+{
+  "culture": "en",
+  "texts": {
+    "Seconds": "second",
+    "Minutes": "minute",
+    "Hours": "hour",
+    "Days": "day",
+
+    "LimitVotingTime": "Time Range of Prohibited Voting",
+    "LimitVotesNumber": "Limit the number of votes",
+
+    "Voting.Rule:CurrentTimeCannotVote": "Voting is not allowed in the current time period ({startTime}-{endTime})",
+    "Voting.Rule:LimitVotesNumber": "You can support the same person up to {number} times per {limitPolicy}"
+  }
+}

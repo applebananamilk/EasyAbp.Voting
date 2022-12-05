@@ -1,0 +1,17 @@
+{
+  "culture": "en",
+  "texts": {
+    "Voting:ActivityNotFound": "Activity does not exist",
+    "Voting:ActivityStartTimeNotGtActivityEndTime": "Activity start time cannot be greater than the end time",
+    "Voting:ActivityNotStarted": "Activity not started",
+    "Voting:ActivityHasEnded": "Activity has ended",
+    "Voting:RejectReasonNotNull": "Reason for rejection cannot be empty",
+    "Voting:PlayerAlreadyExists": "Player already exists",
+    "Voting:GroupNotSelected": "Group not selected",
+    "Voting:InvalidGroup": "Invalid Group：{groupId}",
+    "Voting:AssignPlayerNumberTimeout": "Timeout for assigning player numbers",
+    "Voting:PlayerInfoException": "Player information exceptions",
+    "Voting:RuleNameNotFound": "The defined rule {name} could not be found",
+    "Voting:GroupCannotDelete": "Can't delete group, please check if there are already participating players"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "culture": "zh-Hans",
+  "texts": {
+    "Voting:ActivityNotFound": "活动不存在",
+    "Voting:ActivityStartTimeNotGtActivityEndTime": "活动开始时间不能大于结束时间",
+    "Voting:ActivityNotStarted": "活动未开始",
+    "Voting:ActivityHasEnded": "活动已经结束",
+    "Voting:RejectReasonNotNull": "拒绝原因不能为空",
+    "Voting:PlayerAlreadyExists": "选手已经报名",
+    "Voting:GroupNotSelected": "未选择分组",
+    "Voting:InvalidGroup": "无效的分组：{groupId}",
+    "Voting:AssignPlayerNumberTimeout": "分配选手编号超时",
+    "Voting:PlayerInfoException": "选手信息异常",
+    "Voting:RuleNameNotFound": "未能找到定义的规则{name}",
+    "Voting:GroupCannotDelete": "不能删除分组，请检查是否已有参与选手"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "culture": "zh-Hant",
+  "texts": {
+    "Seconds": "秒",
+    "Minutes": "分鐘",
+    "Hours": "小時",
+    "Days": "天",
+
+    "LimitVotingTime": "禁止投票時間範圍",
+    "LimitVotesNumber": "限製投票數量",
+
+    "Voting.Rule:CurrentTimeCannotVote": "當前時間段({startTime}-{endTime})不允許投票",
+    "Voting.Rule:LimitVotesNumber": "您每{limitPolicy}最多支持同一個人{number}次"
+  }
+}

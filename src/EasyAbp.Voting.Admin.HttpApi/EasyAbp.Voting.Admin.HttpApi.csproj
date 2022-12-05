@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\common.props" />
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace />
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="$(AbpVersion)" />
+		<ProjectReference Include="..\EasyAbp.Voting.Admin.Application.Contracts\EasyAbp.Voting.Admin.Application.Contracts.csproj" />
+	</ItemGroup>
+
+</Project>

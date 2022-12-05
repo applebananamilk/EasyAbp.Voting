@@ -1,0 +1,17 @@
+{
+  "culture": "zh-Hant",
+  "texts": {
+    "Voting:ActivityNotFound": "活動不存在",
+    "Voting:ActivityStartTimeNotGtActivityEndTime": "活動開始時間不能大於結束時間",
+    "Voting:ActivityNotStarted": "活動未開始",
+    "Voting:ActivityHasEnded": "活動已經結束",
+    "Voting:RejectReasonNotNull": "拒絕原因不能為空",
+    "Voting:PlayerAlreadyExists": "選手已經報名",
+    "Voting:GroupNotSelected": "未選擇分組",
+    "Voting:InvalidGroup": "無效的分組：{groupId}",
+    "Voting:AssignPlayerNumberTimeout": "分配選手編號超時",
+    "Voting:PlayerInfoException": "選手信息異常",
+    "Voting:RuleNameNotFound": "未能找到定義的規則{name}",
+    "Voting:GroupCannotDelete": "不能刪除分組，請檢查是否已有參與選手"
+  }
+}
