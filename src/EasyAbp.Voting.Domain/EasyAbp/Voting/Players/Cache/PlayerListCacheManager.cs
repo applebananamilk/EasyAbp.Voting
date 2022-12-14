@@ -105,9 +105,19 @@ public class PlayerListCacheManager : IPlayerListCacheManager, ISingletonDepende
 
         await EnsureLoadedAsync(activityId);
 
+        string pattern;
+        if (int.TryParse(nameOrPlayerNumber, out var playerNumber))
+        {
+            pattern = $"*Num:{playerNumber}";
+        }
+        else
+        {
+            pattern = $"*Name:{nameOrPlayerNumber}*";
+        }
+
         var key = NormalizeReadKey(activityId, groupId);
 
-        await foreach (var sortedSetEntry in Redis.SortedSetScanAsync(key: key, pattern: $"*{nameOrPlayerNumber}*"))
+        await foreach (var sortedSetEntry in Redis.SortedSetScanAsync(key: key, pattern))
         {
             playerSortedSetEntries.Add(Map(sortedSetEntry));
         };
@@ -216,12 +226,12 @@ public class PlayerListCacheManager : IPlayerListCacheManager, ISingletonDepende
 
     protected virtual string NormalizeMember(Guid playerId, string playerName, int playerNumber)
     {
-        return $"{playerId}:{playerName}:{playerNumber}";
+        return $"Id:{playerId}:Name:{playerName}:Num:{playerNumber}";
     }
 
     protected virtual PlayerSortedSetEntry Map(SortedSetEntry sortedSetEntry)
     {
-        var playerId = Guid.Parse(sortedSetEntry.Element.ToString().Split(':')[0]);
+        var playerId = Guid.Parse(sortedSetEntry.Element.ToString().Split(':')[1]);
         var score = (long)sortedSetEntry.Score;
 
         return new PlayerSortedSetEntry(playerId, score);
