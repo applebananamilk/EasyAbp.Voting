@@ -82,7 +82,8 @@ public class ActivityAppService : VotingAppService, IActivityAppService
             var playerEntries = await PlayerListCacheManager.GetListAsync(id,
                 input.GroupId,
                 input.SkipCount,
-                input.MaxResultCount);
+                input.MaxResultCount,
+                input.Newest);
 
             var playerCacheItems = await PlayerCacheItemProvider.GetManyAsync(playerEntries.Select(p => p.PlayerId));
 

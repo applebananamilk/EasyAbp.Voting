@@ -76,7 +76,7 @@ public class PlayerListCacheManager : IPlayerListCacheManager, ISingletonDepende
         return (int)await Redis.SortedSetLengthAsync(key);
     }
 
-    public async Task<List<PlayerSortedSetEntry>> GetListAsync(Guid activityId, Guid? groupId, int skipCount, int maxResultCount)
+    public async Task<List<PlayerSortedSetEntry>> GetListAsync(Guid activityId, Guid? groupId, int skipCount, int maxResultCount, bool newest = false)
     {
         await EnsureLoadedAsync(activityId);
 
@@ -86,7 +86,7 @@ public class PlayerListCacheManager : IPlayerListCacheManager, ISingletonDepende
             key: key,
             start: skipCount,
             stop: skipCount + maxResultCount,
-            order: Order.Ascending
+            order: newest ? Order.Descending : Order.Ascending
             );
 
         var playerSortedSetEntries = sortedSetEntries.Select(Map);
