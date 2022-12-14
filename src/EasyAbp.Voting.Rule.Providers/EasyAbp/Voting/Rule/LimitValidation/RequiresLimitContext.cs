@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.Timing;
 
 namespace EasyAbp.Voting.Rule.LimitValidation;
 
@@ -90,9 +91,9 @@ public class RequiresLimitContext
         return this;
     }
 
-    public TimeSpan GetEffectTimeSpan()
+    public TimeSpan GetEffectTimeSpan(IClock clock)
     {
-        var now = DateTime.Now;
+        var now = clock.Now;
         return Policy switch
         {
             LimitPolicy.Seconds => CalculateExpiry(now, now.AddSeconds(Interval)) - now,

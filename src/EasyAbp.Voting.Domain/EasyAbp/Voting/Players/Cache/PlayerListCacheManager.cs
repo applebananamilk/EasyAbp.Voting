@@ -144,7 +144,7 @@ public class PlayerListCacheManager : IPlayerListCacheManager, ISingletonDepende
                 var timeSpan = await Redis.KeyTimeToLiveAsync(NormalizeReadKey(activityId));
                 if (timeSpan.HasValue)
                 {
-                    MemoryCache.Set(NormalizeReadKey(activityId), DateTime.Now, new MemoryCacheEntryOptions { AbsoluteExpiration = Clock.Now.Add(timeSpan.Value) });
+                    MemoryCache.Set(NormalizeReadKey(activityId), Clock.Now, new MemoryCacheEntryOptions { AbsoluteExpiration = Clock.Now.Add(timeSpan.Value) });
                 }
                 return;
             }

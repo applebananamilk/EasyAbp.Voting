@@ -333,7 +333,7 @@ public class PlayerRankingsCacheManager : IPlayerRankingsCacheManager, ISingleto
                 var timeSpan = await Redis.KeyTimeToLiveAsync(NormalizeReadKey(activityId));
                 if (timeSpan.HasValue)
                 {
-                    MemoryCache.Set(NormalizeReadKey(activityId), DateTime.Now, new MemoryCacheEntryOptions { AbsoluteExpiration = Clock.Now.Add(timeSpan.Value) });
+                    MemoryCache.Set(NormalizeReadKey(activityId), Clock.Now, new MemoryCacheEntryOptions { AbsoluteExpiration = Clock.Now.Add(timeSpan.Value) });
                 }
                 return;
             }

@@ -2,6 +2,7 @@
 using StackExchange.Redis;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Timing;
 
 namespace EasyAbp.Voting.Rule.LimitValidation;
 
@@ -10,13 +11,16 @@ public class RedisRequiresLimitChecker : IRequiresLimitChecker, ISingletonDepend
 {
     protected IDatabase Redis { get; }
     protected IRedisCacheKeyNormalizer KeyNormalizer { get; }
+    protected IClock Clock { get; }
 
     public RedisRequiresLimitChecker(
         IRedisDatabaseAccessor redisDatabaseAccessor,
-        IRedisCacheKeyNormalizer keyNormalizer)
+        IRedisCacheKeyNormalizer keyNormalizer,
+        IClock clock)
     {
         Redis = redisDatabaseAccessor.RedisDatabase;
         KeyNormalizer = keyNormalizer;
+        Clock = clock;
     }
 
     public async Task ProcessAsync(RequiresLimitContext context)
@@ -68,7 +72,7 @@ public class RedisRequiresLimitChecker : IRequiresLimitChecker, ISingletonDepend
             await Redis.StringSetAsync(
                 key,
                 context.Increments,
-                context.GetEffectTimeSpan(),
+                context.GetEffectTimeSpan(Clock),
                 When.NotExists
                 );
         }

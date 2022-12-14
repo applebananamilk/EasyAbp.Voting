@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Data;
+using Volo.Abp.Timing;
 
 namespace EasyAbp.Voting.Rule.Providers;
 
@@ -30,7 +31,8 @@ public class LimitVotingTimeRuleValidationProvider : RuleValidationProvider
             return Task.CompletedTask;
         }
 
-        var currentTime = TimeOnly.FromDateTime(DateTime.Now);
+        var clock = LazyServiceProvider.LazyGetRequiredService<IClock>();
+        var currentTime = TimeOnly.FromDateTime(clock.Now);
 
         if (currentTime > startTime && currentTime < endTime)
         {
