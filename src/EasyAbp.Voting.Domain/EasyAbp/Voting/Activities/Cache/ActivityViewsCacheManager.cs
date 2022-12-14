@@ -1,9 +1,11 @@
 ﻿using EasyAbp.Voting.Caching;
 using StackExchange.Redis;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.DistributedLocking;
 using Volo.Abp.Uow;
@@ -32,14 +34,16 @@ public class ActivityViewsCacheManager : IActivityViewsCacheManager, ISingletonD
         KeyNormalizer = keyNormalizer;
     }
 
-    public async Task IncrementAsync(Guid activityId)
+    public async Task IncrementAsync(Guid activityId, int number = 1)
     {
+        Check.Range(number, nameof(number), 1);
+
         await EnsureCacheLoadedAsync(activityId);
 
         await Redis.HashIncrementAsync(
             NormalizeKey(),
-            NormalizeMember(activityId)
-            );
+            NormalizeMember(activityId),
+            number);
     }
 
     public async Task<long> GetAsync(Guid activityId)
@@ -60,30 +64,34 @@ public class ActivityViewsCacheManager : IActivityViewsCacheManager, ISingletonD
         {
             using var uow = UnitOfWorkManager.Begin(requiresNew: true, isTransactional: false);
 
-            var hashEntries = await Redis.HashGetAllAsync(NormalizeKey());
-            var activityViewsItems = hashEntries.Select(p => new { Id = Guid.Parse(p.Name), Views = (long)p.Value });
+            var activityViewsItems = await GetActivityViewsCacheItemsAsync();
 
             if (activityViewsItems.Any())
             {
-                var activityIds = activityViewsItems.Select(x => x.Id);
+                var activityIds = activityViewsItems.Select(x => x.ActivityId);
                 var activities = await ActivityRepository.GetListAsync(p => activityIds.Contains(p.Id));
 
                 if (activities.Any())
                 {
                     foreach (var activity in activities)
                     {
-                        var activityViewsItem = activityViewsItems.FirstOrDefault(p => p.Id == activity.Id);
+                        var activityViewsItem = activityViewsItems.FirstOrDefault(p => p.ActivityId == activity.Id);
 
                         if (activityViewsItem != null && activityViewsItem.Views != activity.Views)
                         {
                             activity.SetViews(activityViewsItem.Views);
+
                             await ActivityRepository.UpdateAsync(activity, autoSave: true);
+
+                            await RemoveCacheItemAsync(activity.Id);
                         }
                     }
                 }
             }
 
-            await uow.CompleteAsync();
+            // 不提交不会发送事件
+            // 这样的话修改浏览量就不会导致活动缓存失效
+            //await uow.CompleteAsync();
         }
         else
         {
@@ -91,19 +99,41 @@ public class ActivityViewsCacheManager : IActivityViewsCacheManager, ISingletonD
         }
     }
 
+    protected virtual async Task<List<ActivityViewsCacheItem>> GetActivityViewsCacheItemsAsync()
+    {
+        var hashEntries = await Redis.HashGetAllAsync(NormalizeKey());
+
+        var activityViewsItems = hashEntries
+            .Select(p => new ActivityViewsCacheItem(Guid.Parse(p.Name), (long)p.Value));
+
+        return activityViewsItems.ToList();
+    }
+
+    protected virtual Task RemoveCacheItemAsync(Guid activityId)
+    {
+        return Redis.HashDeleteAsync(NormalizeKey(), NormalizeMember(activityId));
+    }
+
     protected virtual async Task EnsureCacheLoadedAsync(Guid activityId)
     {
         if (!await Redis.HashExistsAsync(NormalizeKey(), NormalizeMember(activityId)))
         {
-            var activity = await ActivityRepository.GetAsync(activityId);
+            var activityQuery = await ActivityRepository.GetQueryableAsync();
+
+            var activityViews = await ActivityRepository.AsyncExecuter.SingleOrDefaultAsync(
+                activityQuery.Where(p => p.Id == activityId && !p.IsDraft).Select(p => new { p.Id, p.Views })
+                );
+
+            if (activityViews == null)
+            {
+                throw new BusinessException(VotingErrorCodes.ActivityNotFound);
+            }
 
             await Redis.HashIncrementAsync(
                 NormalizeKey(),
                 NormalizeMember(activityId),
-                activity.Views
+                activityViews.Views
                 );
-
-            await Redis.KeyExpireAsync(NormalizeKey(), TimeSpan.FromDays(10));
         }
     }
 
@@ -115,5 +145,18 @@ public class ActivityViewsCacheManager : IActivityViewsCacheManager, ISingletonD
     protected virtual string NormalizeMember(Guid activityId)
     {
         return activityId.ToString();
+    }
+
+    public class ActivityViewsCacheItem
+    {
+        public Guid ActivityId { get; }
+
+        public long Views { get; }
+
+        public ActivityViewsCacheItem(Guid activityId, long views)
+        {
+            ActivityId = activityId;
+            Views = views;
+        }
     }
 }
