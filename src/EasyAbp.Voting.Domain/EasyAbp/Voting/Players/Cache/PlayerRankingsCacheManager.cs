@@ -104,20 +104,13 @@ public class PlayerRankingsCacheManager : IPlayerRankingsCacheManager, ISingleto
 
             if (playerCacheItem.Status == Status.Approved)
             {
-                var keys = NormalizeWriteKeys(activityId, playerCacheItem.GroupId);
+                await InternalAddAsync(
+                    playerCacheItem.ActivityId,
+                    playerCacheItem.Id,
+                    playerCacheItem.GroupId,
+                    votes);
 
-                var tasks = keys.Select(key => Redis.SortedSetIncrementAsync(
-                    key: key,
-                    member: NormalizeMember(playerId),
-                    value: votes
-                    )
-                ).ToList<Task>();
-
-                tasks.Add(CreateWriteTotalVotesTaskAsync(activityId, votes));
-                tasks.Add(MarkAsync(activityId, playerId));
-
-                await Task.WhenAll(tasks);
-
+                await MarkAsync(activityId, playerId);
                 return;
             }
         }
