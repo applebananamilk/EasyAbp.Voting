@@ -11,7 +11,7 @@ using Volo.Abp.Users;
 
 namespace EasyAbp.Voting.Rule.Providers;
 
-internal class LimitVotesNumberRuleValidationProvider : RuleValidationProvider
+public class LimitVotesNumberRuleValidationProvider : RuleValidationProvider
 {
     public const string ProviderName = "LimitVotesNumber";
     public const string LimitPolicy = nameof(LimitPolicy);
