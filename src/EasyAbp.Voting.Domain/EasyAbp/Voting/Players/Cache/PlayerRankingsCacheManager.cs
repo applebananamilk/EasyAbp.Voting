@@ -291,10 +291,10 @@ public class PlayerRankingsCacheManager : IPlayerRankingsCacheManager, ISingleto
                         {
                             if (player.Votes != playerSortedSetEntry.Score)
                             {
+                                await RemoveMarkAsync(markInfo.SourceMarkInfo);
+
                                 await PlayerRepository.UpdateVotesAsync(player.Id, playerSortedSetEntry.Score);
                                 updateCount++;
-
-                                await RemoveMarkAsync(markInfo.SourceMarkInfo);
                             }
                         }
                         catch (Exception ex)
