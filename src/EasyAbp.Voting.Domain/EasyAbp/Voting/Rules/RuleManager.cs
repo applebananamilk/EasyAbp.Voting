@@ -72,7 +72,7 @@ public class RuleManager : DomainService
     /// <param name="activityId">活动Id</param>
     /// <param name="rules">规则列表</param>
     /// <returns></returns>
-    /// <exception cref="UserFriendlyException"></exception>
+    /// <exception cref="BusinessException"></exception>
     public async Task UpdateRuleListAsync(Guid activityId, List<RuleDefinitionWithOnOff> rules)
     {
         var ruleDefinitions = RuleDefinitionManager.GetAll();

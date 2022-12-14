@@ -58,14 +58,14 @@ public class RequiresLimitContext
     /// 创建限制上下文
     /// </summary>
     /// <param name="limitKey">唯一Key</param>
-    /// <param name="limitPolicy">限制时间策略</param>
     /// <param name="interval">限制时间间隔</param>
+    /// <param name="limitPolicy">限制时间策略</param>
     /// <param name="limit">限量</param>
     /// <param name="increments">此次增量</param>
     /// <remarks>
-    ///     例如：<br/>
-    ///     每1(interval)分钟(limitPolicy)，最多投5(limit)票。本次投3(increments)票。<br/>
-    ///     如果投票成功则调用OnSucceed并利用唯一Key记录加3(increments)，投票失败调用OnFailed。<br/>
+    /// 例如：<br/>
+    /// 每1(interval)分钟(limitPolicy)，最多投5(limit)票。本次投3(increments)票。<br/>
+    /// 如果投票成功利用唯一Key记录加3(increments)，投票失败调用OnFailed。<br/>
     /// </remarks>
     public static RequiresLimitContext Create(
         string limitKey,
