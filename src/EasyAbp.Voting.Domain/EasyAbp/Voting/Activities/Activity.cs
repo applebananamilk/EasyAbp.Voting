@@ -56,6 +56,7 @@ public class Activity : FullAuditedAggregateRoot<Guid>
         SetActivityTime(activityStartTime, activityEndTime);
         SetCoverImage(coverImage);
         SetVotesUnit(votesUnit);
+        SetFormContent(null);
         Publish(false);
 
         Groups = new Collection<Group>();
