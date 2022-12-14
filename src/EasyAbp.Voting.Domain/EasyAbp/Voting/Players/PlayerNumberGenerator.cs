@@ -38,9 +38,4 @@ public class PlayerNumberGenerator : IPlayerNumberGenerator, ITransientDependenc
                     ) + 1;
         }
     }
-
-    protected virtual string CalculateLockName(Guid activityId)
-    {
-        return $"Voting:Activity:{activityId}:Lock:PlayerNumberGenerator";
-    }
 }
