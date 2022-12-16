@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace EasyAbp.Voting.Migrations
 {
     [DbContext(typeof(AuthServerDbContext))]
-    [Migration("20221209151039_Initial")]
+    [Migration("20221216043807_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

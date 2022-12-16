@@ -5,11 +5,14 @@ using System.Linq;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace EasyAbp.Voting.Activities;
 
-public class Activity : FullAuditedAggregateRoot<Guid>
+public class Activity : FullAuditedAggregateRoot<Guid>, IMultiTenant
 {
+    public virtual Guid? TenantId { get; protected set; }
+
     public virtual string ActivityName { get; protected set; }
 
     public virtual DateTime ActivityStartTime { get; protected set; }
@@ -45,6 +48,7 @@ public class Activity : FullAuditedAggregateRoot<Guid>
 
     public Activity(
         Guid id,
+        Guid? tenantId,
         string activityName,
         DateTime activityStartTime,
         DateTime activityEndTime,
@@ -52,6 +56,8 @@ public class Activity : FullAuditedAggregateRoot<Guid>
         string votesUnit)
         : base(id)
     {
+        TenantId = tenantId;
+
         SetActivityName(activityName);
         SetActivityTime(activityStartTime, activityEndTime);
         SetCoverImage(coverImage);

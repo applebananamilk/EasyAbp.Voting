@@ -41,6 +41,7 @@ public class ActivityAppService : CrudAppService<
 
         var activity = new Activity(
             GuidGenerator.Create(),
+            CurrentTenant.Id,
             input.ActivityName,
             Clock.Normalize(input.ActivityStartTime),
             Clock.Normalize(input.ActivityEndTime),

@@ -1,14 +1,17 @@
 ﻿using System;
 using Volo.Abp.Data;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace EasyAbp.Voting.Rules;
 
 /// <summary>
 /// 规则
 /// </summary>
-public class Rule : AuditedAggregateRoot<Guid>
+public class Rule : AuditedAggregateRoot<Guid>, IMultiTenant
 {
+    public virtual Guid? TenantId { get; protected set; }
+
     /// <summary>
     /// 活动Id
     /// </summary>
@@ -42,10 +45,12 @@ public class Rule : AuditedAggregateRoot<Guid>
 
     public Rule(
         Guid id,
+        Guid? tenantId,
         Guid activityId,
         string name,
         bool isEnabled) : base(id)
     {
+        TenantId = tenantId;
         ActivityId = activityId;
         Name = name;
         IsEnabled = isEnabled;

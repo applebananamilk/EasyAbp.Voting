@@ -57,7 +57,16 @@ public class PlayerManager : DomainService
             await ValidateGroupAsync(activity, groupId.Value);
         }
 
-        return new Player(GuidGenerator.Create(), activity.Id, groupId, userId, name, avatar, coverImage, formContent);
+        return new Player(
+            GuidGenerator.Create(),
+            CurrentTenant.Id,
+            activity.Id,
+            groupId,
+            userId,
+            name,
+            avatar,
+            coverImage,
+            formContent);
     }
 
     public virtual Task<bool> IsInActivityAsync(Guid activityId, string userId)

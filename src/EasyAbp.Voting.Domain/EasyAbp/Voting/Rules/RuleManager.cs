@@ -94,6 +94,7 @@ public class RuleManager : DomainService
             {
                 rulePO = new Rule(
                     GuidGenerator.Create(),
+                    CurrentTenant.Id,
                     activityId,
                     rule.Name,
                     rule.IsEnabled

@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace EasyAbp.Voting.Migrations
 {
     [DbContext(typeof(VotingHttpApiHostMigrationsDbContext))]
-    [Migration("20221209151109_Initial")]
+    [Migration("20221216043854_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,9 +93,6 @@ namespace EasyAbp.Voting.Migrations
                     b.Property<bool>("IsDraft")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsSignup")
-                        .HasColumnType("boolean");
-
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("LastModificationTime");
@@ -104,16 +101,9 @@ namespace EasyAbp.Voting.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<string>("SignupButtonText")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
-
-                    b.Property<DateTime?>("SignupEndTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("SignupStartTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("TenantId");
 
                     b.Property<long>("Views")
                         .HasColumnType("bigint");
@@ -253,6 +243,10 @@ namespace EasyAbp.Voting.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("TenantId");
+
                     b.Property<string>("UserId")
                         .HasColumnType("text");
 
@@ -318,6 +312,10 @@ namespace EasyAbp.Voting.Migrations
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("character varying(128)");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("TenantId");
 
                     b.HasKey("Id");
 

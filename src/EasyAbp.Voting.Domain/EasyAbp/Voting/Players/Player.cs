@@ -2,11 +2,14 @@
 using System;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace EasyAbp.Voting.Players;
 
-public class Player : FullAuditedAggregateRoot<Guid>
+public class Player : FullAuditedAggregateRoot<Guid>, IMultiTenant
 {
+    public virtual Guid? TenantId { get; protected set; }
+
     public virtual Guid ActivityId { get; protected set; }
 
     public virtual Guid? GroupId { get; protected internal set; }
@@ -36,6 +39,7 @@ public class Player : FullAuditedAggregateRoot<Guid>
 
     internal Player(
         Guid id,
+        Guid? tenantId,
         Guid activityId,
         Guid? groupId,
         string userId,
@@ -45,9 +49,11 @@ public class Player : FullAuditedAggregateRoot<Guid>
         string formContent)
         : base(id)
     {
+        TenantId = tenantId;
         ActivityId = activityId;
         GroupId = groupId;
         UserId = userId;
+
         SetName(name);
         SetAvatar(avatar);
         SetCoverImage(coverImage);

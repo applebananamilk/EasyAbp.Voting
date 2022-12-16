@@ -14,14 +14,11 @@ namespace EasyAbp.Voting.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uuid", nullable: true),
                     ActivityName = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     ActivityStartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     ActivityEndTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Introduction = table.Column<string>(type: "text", nullable: true),
-                    IsSignup = table.Column<bool>(type: "boolean", nullable: false),
-                    SignupStartTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    SignupEndTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    SignupButtonText = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
                     BackgroundMusic = table.Column<string>(type: "text", nullable: true),
                     CoverImage = table.Column<string>(type: "text", nullable: true),
                     VotesUnit = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
@@ -49,6 +46,7 @@ namespace EasyAbp.Voting.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uuid", nullable: true),
                     ActivityId = table.Column<Guid>(type: "uuid", nullable: false),
                     GroupId = table.Column<Guid>(type: "uuid", nullable: true),
                     UserId = table.Column<string>(type: "text", nullable: true),
@@ -79,6 +77,7 @@ namespace EasyAbp.Voting.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uuid", nullable: true),
                     ActivityId = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false),
                     IsEnabled = table.Column<bool>(type: "boolean", nullable: false),
