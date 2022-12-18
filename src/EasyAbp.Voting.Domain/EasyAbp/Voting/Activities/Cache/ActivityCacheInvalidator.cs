@@ -10,11 +10,11 @@ public class ActivityCacheInvalidator :
     ILocalEventHandler<EntityDeletedEventData<Activity>>,
     ITransientDependency
 {
-    public IActivityCacheItemProvider ActivityCache { get; }
+    public IActivityCacheItemProvider ActivityCacheItemProvider { get; }
 
-    public ActivityCacheInvalidator(IActivityCacheItemProvider activityCache)
+    public ActivityCacheInvalidator(IActivityCacheItemProvider activityCacheItemProvider)
     {
-        ActivityCache = activityCache;
+        ActivityCacheItemProvider = activityCacheItemProvider;
     }
 
     public virtual Task HandleEventAsync(EntityUpdatedEventData<Activity> eventData)
@@ -29,6 +29,6 @@ public class ActivityCacheInvalidator :
 
     protected virtual Task RemoveCacheAsync(Activity activity)
     {
-        return ActivityCache.RemoveAsync(activity.Id);
+        return ActivityCacheItemProvider.RemoveAsync(activity.Id);
     }
 }

@@ -11,19 +11,19 @@ public class CacheExpirationCalculator : ICacheExpirationCalculator, ISingletonD
     public const int PersistenceTimeMinutes = 120;
 
     protected IClock Clock { get; }
-    protected IActivityCacheItemProvider ActivityCache { get; }
+    protected IActivityCacheItemProvider ActivityCacheItemProvider { get; }
 
     public CacheExpirationCalculator(
         IClock clock,
-        IActivityCacheItemProvider activityCache)
+        IActivityCacheItemProvider activityCacheItemProvider)
     {
         Clock = clock;
-        ActivityCache = activityCache;
+        ActivityCacheItemProvider = activityCacheItemProvider;
     }
 
     public virtual async Task<TimeSpan> CalculateAsync(Guid activityId)
     {
-        var activityCacheItem = await ActivityCache.GetAsync(activityId);
+        var activityCacheItem = await ActivityCacheItemProvider.GetAsync(activityId);
 
         var interval = activityCacheItem.ActivityEndTime - Clock.Now;
         if (interval < TimeSpan.Zero)
