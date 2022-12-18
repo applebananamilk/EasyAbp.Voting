@@ -3,7 +3,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace EasyAbp.Voting.Admin.Activities.Dtos;
 
-public class ActivityGetListDto : CreationAuditedEntityDto<Guid>
+public class ActivityGetListDto : ExtensibleFullAuditedEntityDto<Guid>
 {
     public string ActivityName { get; set; }
 

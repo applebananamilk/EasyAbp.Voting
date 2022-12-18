@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.ObjectExtending;
 
 namespace EasyAbp.Voting.Admin.Activities;
 
@@ -48,6 +49,8 @@ public class ActivityAppService : CrudAppService<
             input.CoverImage,
             input.VotesUnit);
 
+        input.MapExtraPropertiesTo(activity);
+
         await ActivityRepository.InsertAsync(activity, autoSave: true);
 
         return await MapToGetOutputDtoAsync(activity);
@@ -76,6 +79,8 @@ public class ActivityAppService : CrudAppService<
         activity.SetVotesUnit(input.VotesUnit);
         activity.ContactUs = input.ContactUs;
         activity.SetFormContent(input.FormContent);
+
+        input.MapExtraPropertiesTo(activity);
 
         await ActivityRepository.UpdateAsync(activity, autoSave: true);
 

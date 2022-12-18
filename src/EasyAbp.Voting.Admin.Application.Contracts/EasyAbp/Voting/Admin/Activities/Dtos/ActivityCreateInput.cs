@@ -1,11 +1,12 @@
 ﻿using EasyAbp.Voting.Activities;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp.ObjectExtending;
 using Volo.Abp.Validation;
 
 namespace EasyAbp.Voting.Admin.Activities.Dtos;
 
-public class ActivityCreateInput
+public class ActivityCreateInput : ExtensibleObject
 {
     [Required]
     [DynamicStringLength(typeof(ActivityConsts), nameof(ActivityConsts.MaxActivityNameLength))]

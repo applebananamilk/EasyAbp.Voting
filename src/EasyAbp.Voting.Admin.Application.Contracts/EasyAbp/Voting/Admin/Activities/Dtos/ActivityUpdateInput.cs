@@ -1,11 +1,12 @@
 ﻿using EasyAbp.Voting.Activities;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp.ObjectExtending;
 using Volo.Abp.Validation;
 
 namespace EasyAbp.Voting.Admin.Activities.Dtos;
 
-public class ActivityUpdateInput
+public class ActivityUpdateInput : ExtensibleObject
 {
     [Required]
     public string ActivityName { get; set; }

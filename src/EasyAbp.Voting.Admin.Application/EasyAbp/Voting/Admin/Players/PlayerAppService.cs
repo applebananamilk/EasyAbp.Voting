@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Services;
+using Volo.Abp.ObjectExtending;
 
 namespace EasyAbp.Voting.Admin.Players;
 
@@ -51,6 +52,8 @@ public class PlayerAppService : CrudAppService<
             input.CoverImage,
             input.FormContent);
 
+        input.MapExtraPropertiesTo(player);
+
         await PlayerRepository.InsertAsync(player, true);
 
         return await MapToGetOutputDtoAsync(player);
@@ -84,6 +87,8 @@ public class PlayerAppService : CrudAppService<
         player.SetAvatar(input.Avatar);
         player.SetCoverImage(input.CoverImage);
         player.SetFormContent(input.FormContent);
+
+        input.MapExtraPropertiesTo(player);
 
         await PlayerRepository.UpdateAsync(player, true);
 

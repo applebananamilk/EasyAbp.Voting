@@ -4,7 +4,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace EasyAbp.Voting.Admin.Players.Dtos;
 
-public class PlayerDto : CreationAuditedEntityDto<Guid>
+public class PlayerDto : ExtensibleCreationAuditedEntityDto<Guid>
 {
     public Guid ActivityId { get; set; }
 

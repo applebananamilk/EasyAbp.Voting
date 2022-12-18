@@ -1,11 +1,12 @@
 ﻿using EasyAbp.Voting.Players;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Volo.Abp.ObjectExtending;
 using Volo.Abp.Validation;
 
 namespace EasyAbp.Voting.Admin.Players.Dtos;
 
-public class PlayerUpdateInput
+public class PlayerUpdateInput : ExtensibleObject
 {
     public Guid? GroupId { get; set; }
 
