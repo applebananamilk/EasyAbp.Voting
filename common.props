@@ -5,11 +5,11 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>EasyAbp Team</Authors>
-    <Description></Description>
+    <Description>An abp voting activity application module.</Description>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/58311641?s=128</PackageIconUrl>
-    <PackageProjectUrl></PackageProjectUrl>
-    <RepositoryUrl></RepositoryUrl>
-    <PackageTags></PackageTags>
+    <PackageProjectUrl>https://github.com/applebananamilk/EasyAbp.Voting</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/applebananamilk/EasyAbp.Voting</RepositoryUrl>
+    <PackageTags>abp module easyabp vote activity</PackageTags>
     <Company>EasyAbp</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
